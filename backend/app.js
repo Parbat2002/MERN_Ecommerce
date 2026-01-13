@@ -1,4 +1,9 @@
 import express from 'express';
-const app = express();
-export default app;
+import product from './routes/productRoutes.js';
 
+
+const app = express();
+
+// Route 
+app.use("/api/v1", product);    
+export default app;
