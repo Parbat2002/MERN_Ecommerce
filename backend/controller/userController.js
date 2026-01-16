@@ -2,6 +2,7 @@ import handleAsyncError from "../middleware/handleAsyncError.js";
 import HandleError from "../utils/handleError.js";
 import User from "../models/userModel.js";
 import { sendToken } from "../utils/jwtToken.js";
+import { sendEmail } from "../utils/sendEmail.js";
 
 
 export const registerUser = handleAsyncError(async (req, res, next) => {
@@ -57,18 +58,37 @@ export const logout = handleAsyncError(async (req, res, next) => {
 // Reset Password
 export const requestPasswordReset = handleAsyncError(async (req, res, next) => {
     const { email } = req.body;
-    const user = await User.findOne({email});
-    if(!user){
+    const user = await User.findOne({ email });
+    if (!user) {
         return next(new HandleError("User not found", 400))
     }
     let resetToken;
-    try{
-resetToken=user.generatePasswordResetToken()
-await user.save({validateBeforeSave:false})
+    try {
+        resetToken = user.generatePasswordResetToken()
+        await user.save({ validateBeforeSave: false })
 
-    }catch(error){
-        console.log(error);
-        
-     return next(new HandleError("Please try again Later", 500))
+    } catch (error) {
+        return next(new HandleError("couldvnot save reset token, Please try again Later", 500))
+    }
+
+    const resetPasswordURL = `http://localhost/api/v1/reset/${resetToken}`;
+    const message = `Use this link to reset your password ${resetPasswordURL}. \n\n expires in 2 minutes. \n\n If you have not requested this email then, please ignore it.`;
+
+    try {
+        // Send Email
+        await sendEmail({
+            email: user.email,
+            subject: "Password Reset",
+            message
+        })
+        res.status(200).json({
+            success: true,
+            message: `Email sent to ${user.email} successfully`
+        })
+    } catch (error) {
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpire = undefined;
+        await user.save({ validateBeforeSave: false })
+        return next(new HandleError("could not send email, Please try again Later", 500))
     }
 })
