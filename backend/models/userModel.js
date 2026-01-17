@@ -65,7 +65,7 @@ userSchema.methods.verifyPassword = async function (userEnteredPassword) {
 userSchema.methods.generatePasswordResetToken = function () {
     const resetToken = crypto.randomBytes(20).toString("hex");
     this.resetPasswordToken = crypto.createHash("sha256").update(resetToken).digest("hex");
-    this.resetPasswordExpire = Date.now() + 2 * 60 * 1000;  // 2 minutes
+    this.resetPasswordExpire = Date.now() + 30 * 60 * 1000;  // 30 minutes
     return resetToken;
 }
 
