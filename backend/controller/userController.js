@@ -5,7 +5,6 @@ import { sendToken } from "../utils/jwtToken.js";
 import { sendEmail } from "../utils/sendEmail.js";
 import crypto from "crypto";
 
-
 export const registerUser = handleAsyncError(async (req, res, next) => {
     const { name, email, password } = req.body;
 
@@ -113,4 +112,13 @@ user.resetPasswordToken=undefined;
 user.resetPasswordExpire=undefined;
 await user.save();
 sendToken(user,200,res);
+})
+
+// get user details
+export const getUserDetails=handleAsyncError(async (req, res, next) => {
+const user=await User.findById(req.user.id);
+res.status(200).json({
+    success:true,
+    user
+})
 })
