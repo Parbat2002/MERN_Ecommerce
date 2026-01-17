@@ -4,6 +4,7 @@ import User from "../models/userModel.js";
 import { sendToken } from "../utils/jwtToken.js";
 import { sendEmail } from "../utils/sendEmail.js";
 import crypto from "crypto";
+import { log } from "console";
 
 export const registerUser = handleAsyncError(async (req, res, next) => {
     const { name, email, password } = req.body;
@@ -158,6 +159,29 @@ export const updateProfile = handleAsyncError(async (req, res, next) => {
     res.status(200).json({
         success: true,
         message:"profile updated successfully",
+        user
+    })
+
+})
+
+// Admin - User info Access
+export const getUsersList=handleAsyncError(async(req,res,next)=>{
+    const users=await User.find();
+    res.status(200).json({
+        success:true,
+        users
+    })
+
+})
+
+//ADMIN - Single user info
+export const getSingleUser=handleAsyncError(async(req,res,next)=>{
+    const user=await User.findById(req.params.id);
+    if(!user){
+        return next(new HandleError(`User not found ${req.params.id}`,400))
+    }
+    res.status(200).json({
+        success:true,
         user
     })
 
