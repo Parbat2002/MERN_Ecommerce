@@ -186,3 +186,36 @@ export const getSingleUser=handleAsyncError(async(req,res,next)=>{
     })
 
 })
+
+// Admin - Changing user roles
+export const updateUserRole=handleAsyncError(async(req,res,next)=>{
+    const {role}=req.body;
+    const newUserData={
+        role
+    }
+    const user=await User.findByIdAndUpdate(req.params.id,newUserData,{
+        new:true,
+        runValidators:true,
+    })
+    if(!user){
+        return next(new HandleError("User does not exist",400))
+    }
+    res.status(200).json({
+        success:true,
+        user
+    })
+})
+
+// ADMIN - deleting user profile
+export const deleteUser=handleAsyncError(async(req,res,next)=>{
+    const user=await User.findById(req.params.id);
+    if(!user){
+        return next(new HandleError("User does not exist",400))
+    }
+    await User.findByIdAndDelete(req.params.id);
+    res.status(200).json({
+        success:true,
+        message:"User deleted successfully"
+    })
+
+})
