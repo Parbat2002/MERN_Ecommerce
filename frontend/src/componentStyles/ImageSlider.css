@@ -34,18 +34,18 @@
   .dot {
     width: 10px;
     height: 10px;
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgb(1, 20, 8);
     border-radius: 50%;
     cursor: pointer;
     transition: background-color 0.3s;
   }
   
   .dot.active {
-    background-color: rgba(255, 255, 255, 1);
+    background-color: rgb(19, 236, 48);
   }
   
   .dot:hover {
-    background-color: rgba(255, 255, 255, 1);
+    background-color: rgb(118, 240, 139);
   }
 
   @media (max-width: 768px) {

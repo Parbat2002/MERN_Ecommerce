@@ -3,8 +3,8 @@
     position: fixed;
     top: 0;
     width: 100%;
-    background-color: var(--bg-primary);
-    box-shadow: var(--shadow-sm);
+    background-color: darkgreen;
+    box-shadow: lightgreen;
     z-index: 1000;
     
 
@@ -13,7 +13,7 @@
   .navbar-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 1.5rem;
+    padding: 0 20px;
     height: 4rem;
     display: flex;
     align-items: center;
@@ -23,13 +23,13 @@
   .navbar-logo a {
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--primary-light);
+    color: #2cf036;
     text-decoration: none;
     transition: color 0.2s ease;
   }
   
   .navbar-logo a:hover {
-    color: var(--primary-main);
+    color: lightgreen;
   }
   
   .navbar-links {
@@ -46,14 +46,14 @@
   }
   
   .navbar-links li a {
-    color: var(--text-primary);
+    color: wheat;
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 600;
     transition: color 0.2s ease;
   }
   
   .navbar-links li a:hover {
-    color: var(--primary-light);
+    color:lightgreen;
   }
   
   .search-item {
@@ -65,31 +65,31 @@
   .navbar-icons {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 2.5rem;
     width: 250px;
   }
   
   .icon {
-    color: var(--text-primary);
+    color:wheat;
     transition: color 0.2s ease;
     cursor: pointer;
   }
   
   .icon:hover {
-    color: var(--primary-light);
+    color: lightgreen;
   }
   
   .cart-container {
     position: relative;
     display: flex;
-    align-items: center;
+    margin-right: 20px;
   }
   
   .cart-badge {
     position: absolute;
     top: -8px;
     right: -8px;
-    background-color: var(--primary-main);
+    background-color: green;
     color: var(--text-light);
     font-size: 0.75rem;
     font-weight: 600;

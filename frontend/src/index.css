@@ -1,15 +1,15 @@
 :root { 
     
-    --primary-main: #6C5B7B; 
-    --primary-dark: #4E4A59; 
+    --primary-main: green; 
+    --primary-dark: #2cfc11; 
     --primary-light: #F8B5B1; 
     
     --bg-primary: #2E2E3C; 
     --bg-secondary: #3B3B4F; 
     
-    --text-primary: #EAE7E0; 
+    --text-primary: green; 
     --text-secondary: #B9A7A0; 
-    --text-light: #FFFFFF; 
+    --text-light: white; 
     
     --border-color: #5C4A6F; 
     
