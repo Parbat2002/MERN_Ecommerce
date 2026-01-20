@@ -1,27 +1,24 @@
-
-  .star {
+.star {
     font-size: 1.5rem;
     cursor: pointer;
     transition: color 0.3s ease, transform 0.3s ease;
-    color: var(--text-secondary);
-  }
-  
-  .star.filled {
-    color: var(--primary-main); 
-  }
-  
-  .star.empty {
-    color: var(--text-secondary); 
-  }
-  
-  .star:hover {
+   
+}
+.star.filled {
+    color: green; 
+}
+
+.star.empty {
+    color: lightgreen;
+}
+ 
+ .star:hover {
     transform: scale(1.2); 
     color: var(--primary-main); 
   }
   
   .productCardSpan {
     font-size: 0.9rem;
-    color: var(--text-secondary);
+    color: green;
     margin-left: 0.5rem;
   }
-  
