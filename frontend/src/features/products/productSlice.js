@@ -1,10 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export const getProduct = createAsyncThunk('product/getProduct', async (_, { rejectWithValue }) => {
+export const getProduct = createAsyncThunk('product/getProduct', async ({keyword,page=1}, { rejectWithValue }) => {
     try {
-        const link = '/api/v1/products';
-        const {data} = await axios.get(link)
+        const link = keyword ? `/api/v1/products?keyword=${encodeURIComponent(keyword)}
+        &page=${page}` 
+        : `/api/v1/products?page=${page}`;
+        const { data } = await axios.get(link)
         console.log('Response', data);
         return data
 
@@ -13,13 +15,28 @@ export const getProduct = createAsyncThunk('product/getProduct', async (_, { rej
     }
 })
 
+//Product Details 
+export const getProductDetails = createAsyncThunk('product/getProductDetails', async (id, { rejectWithValue }) => {
+    try {
+        const link = `/api/v1/product/${id}`;
+        const { data } = await axios.get(link);
+        return data;
+    } catch (error) {
+        return rejectWithValue(error.response?.data || 'Something went wrong')
+    }
+})
+
+
 const productSlice = createSlice({
     name: 'product',
     initialState: {
         products: [],
         productCount: 0,
         loading: false,
-        error: null
+        error: null,
+        product: null,
+        resultPerpage: 4,
+        totalPages: 0
     },
     reducers: {
         removeErrors: (state) => {
@@ -38,8 +55,26 @@ const productSlice = createSlice({
                 state.error = null;
                 state.products = action.payload.products;
                 state.productCount = action.payload.productCount;
-            })
+                state.resultPerpage = action.payload.resultPerpage;
+                state.totalPages = action.payload.totalPages;
+            })      
             .addCase(getProduct.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload || 'Something went wrong'
+                state.products = [];
+            })
+        builder.addCase(getProductDetails.pending, (state) => {
+            state.loading = true;
+            state.error = null
+        })
+            .addCase(getProductDetails.fulfilled, (state, action) => {
+                console.log('Product Details', action.payload);
+
+                state.loading = false;
+                state.error = null;
+                state.product = action.payload.product;
+            })
+            .addCase(getProductDetails.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload || 'Something went wrong'
             })

@@ -43,9 +43,9 @@ function Rating({ value, onRatingChange, disabled }) {
                 
                 className={`star ${isFilled ? 'filled' : 'empty'}`}
                 
-                onMouseEnter={() => handleMouseEnter}
-                onMouseLeave={() => handleMouseLeave}
-                onClick={() => handleClick}
+                onMouseEnter={() => handleMouseEnter(i)}
+                onMouseLeave={handleMouseLeave}
+                onClick={() => handleClick(i)}
                 style={{ pointerEvents: disabled ? 'none' : 'auto' }}
             >
                 ★
