@@ -20,7 +20,7 @@ router.route("/reset/:token")
 .post(resetPassword);
 
 router.route("/profile")
-.post(verifyUserAuth,getUserDetails);
+.get(verifyUserAuth,getUserDetails);
 
 router.route("/password/update")
 .post(verifyUserAuth,updatePassword);

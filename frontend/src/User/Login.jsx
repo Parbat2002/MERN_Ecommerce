@@ -35,10 +35,10 @@ function Login() {
     <div className="form-content">
         <form className='form' onSubmit={loginSubmit}>
             <div className="input-group">
-                <input type="email" placeholder='Email' value={loginEmail} onChange={(e)=>setLoginEmail(e.target.value)} />
+                <input type="email" placeholder='Email' value={loginEmail} onChange={(e)=>setLoginEmail(e.target.value)} autoComplete='off'/>
             </div>
              <div className="input-group">
-                <input type="password" placeholder='Password' value={loginPassword} onChange={(e)=>setLoginPassword(e.target.value)} />
+                <input type="password" placeholder='Password' value={loginPassword} onChange={(e)=>setLoginPassword(e.target.value)} autoComplete='new-password' />
             </div>
             <button className="authBtn">Sign In</button>
             <p className="form-links">Forgot your password ?<Link to='/password/forgot'>Reset Here!</Link></p>

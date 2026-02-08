@@ -51,7 +51,7 @@ function Register() {
             dispatch(removeErrors());
         }
         if (success) {
-            toast.success('Registration Successful!');
+            toast.success('Registration Successful!',{position:'top-center',autoClose:3000});
             dispatch(removeSuccess());
             navigate('/login');
         }
@@ -63,20 +63,20 @@ function Register() {
                     <form  className="form" onSubmit={registerSubmit} encType='multipart/form-data'>
                         <h2>Sign Up</h2>
                         <div className="input-group">
-                            <input type="text" placeholder='Username' name='name' value={name} onChange={registerDataChange}/>
+                            <input type="text" placeholder='Username' name='name' value={name} onChange={registerDataChange} autoComplete='off'/>
                         </div>
                           <div className="input-group">
-                            <input type="email" placeholder='Email' name='email' value={email} onChange={registerDataChange}/>
+                            <input type="email" placeholder='Email' name='email' value={email} onChange={registerDataChange} autoComplete='off'/>
                         </div>
                           <div className="input-group">
-                            <input type="password" placeholder='Password' name='password' value={password} onChange={registerDataChange}/>
+                            <input type="password" placeholder='Password' name='password' value={password} onChange={registerDataChange} autoComplete='new-password'/>
                         </div>
                         <div className="input-group avatar-group">
-                            <input type="file" name='avatar' className='file-input' accept='image/' onChange={registerDataChange}/>
+                            <input type="file" name='avatar' className='file-input' accept='image/' onChange={registerDataChange} autoComplete='off'/>
                             <img src={avatarPreview} alt="Avatar Preview" className='avatar'/>
                         </div>
                         <button className="authBtn" disabled={loading}>
-                            {loading ? "Loading..." : "Sign Up"}
+                            {loading ? "Signing Up..." : "Sign Up"}
                         </button>
                         <p className="form-links">
                             Already have an account? <Link to="/login">Sign In Here!</Link>
