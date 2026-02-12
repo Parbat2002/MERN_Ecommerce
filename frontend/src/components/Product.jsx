@@ -25,7 +25,7 @@ const handleRatingChange=(newRating)=>{
           disabled={true} 
           />
         </div>
-        <span className="productCardSpan">
+        <span className="product-card">
           ({product.numberOfReviews} {product.numberOfReviews === 1 ? ' Review' : ' Reviews'} )
         </span>
         <button className="add-to-cart">View Details</button>

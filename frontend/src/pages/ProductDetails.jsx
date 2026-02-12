@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../pageStyles/ProductDetails.css';
+import '../componentStyles/Rating.css'
 import PageTitle from '../components/PageTitle';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -101,13 +102,13 @@ function ProductDetails() {
                 <div className="reviews-container">
                     <h3>Customer Reviews</h3>
                     {product.reviews && product.reviews.length > 0 ? (<div className="reviews-section">
-                        {product.reviews.map((review, index) => (
+                        {product.reviews.map((reviews, index) => (
                             <div className="review-item" key={index}>
                                 <div className="review-header">
-                                    <Rating value={review.ratings} disabled={true} />
+                                    <Rating value={reviews.rating} disabled={true} />
                                 </div>
-                                <p className="review-comment">{review.comment}</p>
-                                <p className="review-name">By : {review.name}</p>
+                                <p className="review-comment">{reviews.comment}</p>
+                                <p className="review-name">By : {reviews.name}</p>
                             </div>
                         ))}
                     </div>) : (

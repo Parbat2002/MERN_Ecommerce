@@ -23,10 +23,10 @@ router.route("/profile")
 .get(verifyUserAuth,getUserDetails);
 
 router.route("/password/update")
-.post(verifyUserAuth,updatePassword);
+.put(verifyUserAuth,updatePassword);
 
 router.route("/profile/update")
-.post(verifyUserAuth,updateProfile);
+.put(verifyUserAuth,updateProfile);
 
 router.route("/admin/users")
 .get(verifyUserAuth, roleBasedAccess("admin"),getUsersList);

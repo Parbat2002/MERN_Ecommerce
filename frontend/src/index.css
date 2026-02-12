@@ -2,16 +2,16 @@
     
     --primary-main: green; 
     --primary-dark: #2cfc11; 
-    --primary-light: #F8B5B1; 
+    --primary-light: #2cfc11; 
     
-    --bg-primary: #f52323; 
+    --bg-primary: #2cfc11; 
     --bg-secondary:darkgreen; 
     
-    --text-primary: green; 
+    --text-primary: rgb(244, 247, 244); 
     --text-secondary: #c7f7be; 
     --text-light: white; 
     
-    --border-color: #5C4A6F; 
+    --border-color: lightgreen; 
     
 
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2); 

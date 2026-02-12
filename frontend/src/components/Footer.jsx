@@ -14,7 +14,7 @@ function Footer() {
                 </div>
         
                 {/* Section2 */}
-                <div className="footer-sectin social">
+                <div className="footer-section social">
                     <h3>Follow Us</h3>
                     <div className="social-links">
                         <a href="" target='_blank'>
