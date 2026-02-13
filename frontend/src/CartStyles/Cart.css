@@ -159,13 +159,13 @@
 }
 
 .update-item-btn {
-  background: var( --primary-dark);
+  background: darkgreen;
   color: white;
 }
 
 .remove-item-btn {
-  background:var( --primary-light);
-  color: var(--bg-primary)
+  background:darkgreen;
+  color:white
 }
 
 .update-item-btn:hover,
@@ -173,8 +173,8 @@
   opacity: 0.9;
 }
 .remove-item-btn:hover{
-  background:var( --primary-light);
-  color: var(--bg-primary)
+  background:var(--bg-primary);
+  color:white
 }
 
 .price-summary {
@@ -217,7 +217,7 @@
   width: 100%;
   padding: 1rem;
   margin-top: 1.5rem;
-  background:var( --primary-dark);
+  background:darkgreen;
   color: white;
   border: none;
   border-radius: 8px;

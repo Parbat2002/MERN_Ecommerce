@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import PageTitle from '../components/PageTitle';
 import Loader from '../components/Loader';
+import Navbar from '../components/Navbar';
 
 function Profile() {
     const {loading,isAuthenticated,user}=useSelector(state=>state.user);
@@ -18,8 +19,11 @@ function Profile() {
     
   return (
     <>
-    {loading?(<Loader/>):(<div className="profile-container">
+    
+    {loading?(<Loader/>):(
+        <div className="profile-container">
         <PageTitle title={`${user.name}'s Profile`}/>
+        
         <div className="profile-image">
             <h1 className="profile-heading">My Profile</h1>
             <img src={user.avatar.url?user.avatar.url:'./images/profile.png'} alt="User Profile" className="profile-image" />

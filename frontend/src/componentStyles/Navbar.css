@@ -153,13 +153,14 @@
       gap: 1rem;
     }
   
-    .navbar-icons {
+    .icon {
       gap: 1.25rem;
+      margin-right: 0px;
     }
   
     .navbar-hamburger {
       display: block;
-      margin-left: 1rem;
+      margin-right: 120px;
     }
   
     .navbar-links.active li {

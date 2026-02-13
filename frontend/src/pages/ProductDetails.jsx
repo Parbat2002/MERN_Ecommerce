@@ -10,8 +10,32 @@ import { useParams } from 'react-router-dom';
 import { getProductDetails, removeErrors } from '../features/products/productSlice';
 import { toast } from 'react-toastify';
 import Loader from '../components/Loader';
+import { addItemsToCart } from '../features/cart/cartSlice';
 
 function ProductDetails() {
+    const [quantity, setQuantity] = useState(1);
+    const increaseQuantity = () => {
+        if (product.stock <= quantity) {
+            toast.error('Exceeded Available Stock!', { position: 'top-center', autoClose: 3000 })
+            dispatch(removeErrors())
+            return;
+        }
+        setQuantity(qty => qty + 1)
+    }
+    const decreaseQuantity = () => {
+        if (quantity <= 1) {
+            toast.error('Quantity cannot be less than 1 !', { position: 'top-center', autoClose: 3000 })
+            dispatch(removeErrors())
+            return;
+        }
+        setQuantity(qty => qty - 1)
+    }
+
+    const addToCart = () => {
+        dispatch(addItemsToCart({ id, quantity }))
+    }
+
+
     const [userRating, setUserRating] = useState(0);
     const handleRatingChange = (newRating) => {
         setUserRating(newRating)
@@ -81,12 +105,12 @@ function ProductDetails() {
                         </div>
                         {product.stock > 0 && (<><div className="quantity-controls">
                             <span className="quantity-label">Quantity:</span>
-                            <button className="quantity-button">-</button>
-                            <input type="text" value={1} className="quantity-value" readOnly />
-                            <button className="quantity-button">+</button>
+                            <button className="quantity-button" onClick={decreaseQuantity}>-</button>
+                            <input type="text" value={quantity} className="quantity-value" readOnly />
+                            <button className="quantity-button" onClick={increaseQuantity}>+</button>
 
                         </div>
-                            <button className="add-to-cart-btn">Add to Cart</button></>)}
+                            <button className="add-to-cart-btn" onClick={addToCart}>Add to Cart</button></>)}
                         <form className="review-form">
                             <h3>Write a Review</h3>
                             <Rating
