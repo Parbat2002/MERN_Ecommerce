@@ -1,7 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { addItemsToCart, removeCartItem, removeErrors } from '../features/cart/cartSlice';
-import { toast } from 'react-toastify';
+import { addItemsToCart, removeCartItem } from '../features/cart/cartSlice';
 
 
 function CartItem({ item }) {

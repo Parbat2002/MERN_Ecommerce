@@ -102,7 +102,7 @@ export const updateProfile = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(
         error.response?.data?.message ||
-          "Profile update failed! Please try again later"
+        "Profile update failed! Please try again later"
       );
     }
   }
@@ -127,7 +127,7 @@ export const updatePassword = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(
         error.response?.data?.message ||
-          "Password update failed! Please try again later"
+        "Password update failed! Please try again later"
       );
     }
   }
@@ -152,7 +152,7 @@ export const forgotPassword = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(
         error.response?.data?.message ||
-          "Sending Email failed! Please try again later"
+        "Sending Email failed! Please try again later"
       );
     }
   }
@@ -186,11 +186,11 @@ export const resetPassword = createAsyncThunk(
 const userSlice = createSlice({
   name: "user",
   initialState: {
-    user: null,
+    user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null,
     loading: false,
     error: null,
     success: false,
-    isAuthenticated: false,
+    isAuthenticated: localStorage.getItem('isAuthenticated') === 'true',
     message: null,
   },
   reducers: {
@@ -214,6 +214,10 @@ const userSlice = createSlice({
         state.success = action.payload?.success;
         state.user = action.payload?.user || null;
         state.isAuthenticated = Boolean(action.payload?.user);
+
+        //store in localstorage
+        localStorage.setItem('user', JSON.stringify(state.user));
+        localStorage.setItem('isAuthenticated', JSON.stringify(state.isAuthenticated));
       })
       .addCase(register.rejected, (state, action) => {
         state.loading = false;
@@ -232,6 +236,10 @@ const userSlice = createSlice({
         state.success = action.payload?.success;
         state.user = action.payload?.user || null;
         state.isAuthenticated = Boolean(action.payload?.user);
+
+        //store in localstorage
+        localStorage.setItem('user', JSON.stringify(state.user));
+        localStorage.setItem('isAuthenticated', JSON.stringify(state.isAuthenticated));
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
@@ -249,12 +257,23 @@ const userSlice = createSlice({
         state.loading = false;
         state.user = action.payload?.user || null;
         state.isAuthenticated = Boolean(action.payload?.user);
+
+        //store in localstorage
+        localStorage.setItem('user', JSON.stringify(state.user));
+        localStorage.setItem('isAuthenticated', JSON.stringify(state.isAuthenticated));
       })
       .addCase(loadUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
         state.user = null;
         state.isAuthenticated = false;
+
+        if (action.payload?.statusCode === 401) {
+          state.user = null;
+          state.isAuthenticated = false;
+          localStorage.removeItem('user');
+          localStorage.removeItem('isAuthenticated');
+        }
       })
 
       // LOGOUT
@@ -266,6 +285,9 @@ const userSlice = createSlice({
         state.loading = false;
         state.user = null;
         state.isAuthenticated = false;
+
+        localStorage.removeItem('user');
+        localStorage.removeItem('isAuthenticated');
       })
       .addCase(logout.rejected, (state, action) => {
         state.loading = false;

@@ -17,6 +17,7 @@
     "@mui/styled-engine": "^7.3.7",
     "@reduxjs/toolkit": "^2.11.2",
     "axios": "^1.13.2",
+    "country-state-city": "^3.2.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-redux": "^9.2.0",
