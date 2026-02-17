@@ -19,17 +19,15 @@ import OrderConfirm from "./Cart/OrderConfirm";
 import Payment from "./Cart/Payment";
 import { loadUser } from "./features/user/userSlice";
 
-
 function App() {
   const { isAuthenticated, user } = useSelector(state => state.user);
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (isAuthenticated) {
       dispatch(loadUser())
     }
   }, [dispatch]);
-  console.log(isAuthenticated, user);
-
 
   return (
     <Router>
@@ -42,19 +40,17 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} />
         <Route path="/profile/update" element={<ProtectedRoute element={<UpdateProfile />} />} />
-        <Route path="/password/update" element={<ProtectedRoute element={<UpdatePassword />} />} /> 
+        <Route path="/password/update" element={<ProtectedRoute element={<UpdatePassword />} />} />
         <Route path="/password/forgot" element={<ForgotPassword />} />
-        <Route path="/reset/:token" element={<ResetPassword/>} />
-        <Route path="/cart" element={<Cart/>} />
-        <Route path="/shipping" element={<ProtectedRoute element={<Shipping />} />} /> 
-        <Route path="/order/confirm" element={<ProtectedRoute element={<OrderConfirm />} />} /> 
-        <Route path="/process/payment" element={<ProtectedRoute element={<Payment />} />} /> 
-
-
-
-    </Routes>
-      { isAuthenticated && <UserDashboard user={user} /> }
-    </Router >
+        <Route path="/reset/:token" element={<ResetPassword />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/shipping" element={<ProtectedRoute element={<Shipping />} />} />
+        <Route path="/order/confirm" element={<ProtectedRoute element={<OrderConfirm />} />} />
+        {/*  Payment route — handles success/failure internally */}
+        <Route path="/process/payment" element={<ProtectedRoute element={<Payment />} />} />
+      </Routes>
+      {isAuthenticated && <UserDashboard user={user} />}
+    </Router>
   )
 }
 

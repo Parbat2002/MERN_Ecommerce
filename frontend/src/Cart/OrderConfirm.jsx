@@ -49,7 +49,7 @@ function OrderConfirm() {
                         <tbody>
                             <tr>
                                 <td>{user.name}</td>
-                                <td>{shippingInfo.phoneNumber}</td>
+                                <td>{shippingInfo.phoneNo}</td>
                                 <td>{shippingInfo.address},
                                     {shippingInfo.city},
                                     {shippingInfo.state},

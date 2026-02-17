@@ -29,7 +29,7 @@ function Shipping() {
             toast.error('Invalid Phone Number!', { position: 'top-center', autoClose: 3000 })
             return;
         }
-        dispatch(saveShippingInfo({address,pinCode,phoneNumber,country,state,city}))
+        dispatch(saveShippingInfo({address,pinCode,phoneNo:phoneNumber,country,state,city}))
         navigate('/order/confirm')
     }
     return (

@@ -31,7 +31,7 @@ const cartSlice = createSlice({
         error: null,
         success: false,
         message: null,
-        shippingInfo:JSON.parse(localStorage.getItem("shippingInfo"))||{},
+        shippingInfo: JSON.parse(localStorage.getItem("shippingInfo")) || {},
     },
     reducers: {
         removeCartItem: (state, action) => {
@@ -45,10 +45,17 @@ const cartSlice = createSlice({
             state.message = null;
             state.success = false;
         },
-        saveShippingInfo:(state,action)=>{
-            state.shippingInfo=action.payload
-            localStorage.setItem('shippingInfo',JSON.stringify(state.shippingInfo))
-        }
+        saveShippingInfo: (state, action) => {
+            state.shippingInfo = action.payload;
+            localStorage.setItem('shippingInfo', JSON.stringify(state.shippingInfo));
+        },
+        // ================= NEW: CLEAR CART AFTER PAYMENT SUCCESS =================
+        clearCart: (state) => {
+            state.cartItems = [];
+            state.shippingInfo = {};
+            localStorage.removeItem("cartItems");
+            localStorage.removeItem("shippingInfo");
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(addItemsToCart.pending, (state) => {
@@ -66,7 +73,7 @@ const cartSlice = createSlice({
             state.loading = false;
             state.success = true;
             localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
-             state.message = `${item.name}, Added to cart!`
+            state.message = `${item.name}, Added to cart!`;
         });
         builder.addCase(addItemsToCart.rejected, (state, action) => {
             state.loading = false;
@@ -75,5 +82,5 @@ const cartSlice = createSlice({
     },
 });
 
-export const { removeErrors, removeMessage, removeCartItem,saveShippingInfo} = cartSlice.actions;
+export const { removeErrors, removeMessage, removeCartItem, saveShippingInfo, clearCart } = cartSlice.actions;
 export default cartSlice.reducer;
