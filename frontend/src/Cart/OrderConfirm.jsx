@@ -1,5 +1,5 @@
 import React from 'react'
-import '../CartStyles/OrderConfirm.css'
+import '../cartStyles/CartStyles.css'
 import PageTitle from '../components/PageTitle'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Phone, Mail, GitHub, Instagram, YouTube, LinkedIn } from '@mui/icons-material'
-import '../componentStyles/Footer.css'
+import '../componentStyles/componentStyles.css'
 
 function Footer() {
     return (

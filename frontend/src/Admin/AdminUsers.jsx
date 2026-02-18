@@ -5,7 +5,7 @@ import { toast } from 'react-toastify'
 import AdminLayout from './AdminLayout'
 import Loader from '../components/Loader'
 import { getAllUsers, updateUserRole, deleteUser, removeErrors, removeSuccess } from '../features/admin/adminSlice'
-import '../Admin/adminStyles/AdminLayout.css'
+import '../adminStyles/AdminStyles.css'
 
 const ROWS_PER_PAGE = 8
 

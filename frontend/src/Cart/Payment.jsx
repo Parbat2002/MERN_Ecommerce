@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import '../CartStyles/Payment.css'
+import '../cartStyles/CartStyles.css'
 import PageTitle from '../components/PageTitle'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'

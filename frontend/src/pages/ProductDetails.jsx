@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import '../pageStyles/ProductDetails.css';
-import '../componentStyles/Rating.css';
+import '../pageStyles/PageStyles.css'
+import '../componentStyles/componentStyles.css'
 import PageTitle from '../components/PageTitle';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';

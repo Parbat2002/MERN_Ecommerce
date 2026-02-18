@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 import AdminLayout from './AdminLayout'
 import Loader from '../components/Loader'
 import { getAllOrders, updateOrderStatus, deleteOrder, removeErrors, removeSuccess } from '../features/order/orderSlice'
-import '../Admin/adminStyles/AdminLayout.css'
+import '../adminStyles/AdminStyles.css'
 
 const ROWS_PER_PAGE = 8
 

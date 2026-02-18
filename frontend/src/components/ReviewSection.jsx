@@ -6,7 +6,7 @@ import {
     createReview, getProductReviews, deleteReview,
     removeErrors, removeSuccess
 } from '../features/review/reviewSlice'
-import './ReviewSection.css'
+import '../componentStyles/componentStyles.css'
 
 function StarInput({ value, onChange }) {
     const [hovered, setHovered] = useState(0)

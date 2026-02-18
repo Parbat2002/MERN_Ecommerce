@@ -7,7 +7,7 @@ import Footer from '../components/Footer'
 import Loader from '../components/Loader'
 import PageTitle from '../components/PageTitle'
 import { getMyOrders, removeErrors } from '../features/order/orderSlice'
-import '../orderStyles/MyOrders.css'
+import '../orderStyles/OrderStyles.css'
 
 function MyOrders() {
     const dispatch = useDispatch()

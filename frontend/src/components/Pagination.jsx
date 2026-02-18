@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import '../componentStyles/Pagination.css'
+import '../componentStyles/componentStyles.css'
 
 function Pagination({
     currentPage,

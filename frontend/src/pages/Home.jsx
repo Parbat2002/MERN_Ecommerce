@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import '../pageStyles/Home.css'
+import '../pageStyles/PageStyles.css'
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
 import ImageSlider from '../components/ImageSlider'

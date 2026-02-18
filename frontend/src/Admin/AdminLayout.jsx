@@ -7,7 +7,7 @@ import {
 } from '@mui/icons-material'
 import {logout} from '../features/user/userSlice.js'
 import { toast } from 'react-toastify'
-import '../Admin/adminStyles/AdminLayout.css'
+import '../adminStyles/AdminStyles.css'
 
 const navItems = [
     { label: 'Dashboard', icon: <Dashboard />, path: '/admin/dashboard' },

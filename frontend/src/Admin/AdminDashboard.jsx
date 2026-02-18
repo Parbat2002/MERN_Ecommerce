@@ -6,8 +6,7 @@ import AdminLayout from './AdminLayout'
 import { getAllOrders } from '../features/order/orderSlice'
 import { getAllUsers, getAdminProducts } from '../features/admin/adminSlice'
 import Loader from '../components/Loader'
-import '../Admin/adminStyles/AdminLayout.css'
-import '../Admin/adminStyles/AdminDashboard.css'
+import '../adminStyles/AdminStyles.css'
 
 function AdminDashboard() {
     const dispatch = useDispatch()

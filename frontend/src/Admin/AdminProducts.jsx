@@ -8,7 +8,7 @@ import {
     getAdminProducts, createProduct, updateProduct,
     deleteProduct, removeErrors, removeSuccess
 } from '../features/admin/adminSlice'
-import '../Admin/adminStyles/AdminLayout.css'
+import '../adminStyles/AdminStyles.css'
 
 const ROWS_PER_PAGE = 8
 const CATEGORIES = ['Electronics', 'Clothing', 'Footwear', 'Books', 'Home', 'Beauty', 'Sports', 'Toys', 'Other']

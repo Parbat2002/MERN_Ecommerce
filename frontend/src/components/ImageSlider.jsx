@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../componentStyles/ImageSlider.css';
+import '../componentStyles/componentStyles.css'
 
 const images=[
     "./images/banner1.png",

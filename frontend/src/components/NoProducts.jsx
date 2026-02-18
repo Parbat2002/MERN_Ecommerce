@@ -1,5 +1,5 @@
 import React from 'react'
-import '../componentStyles/NoProducts.css'
+import '../componentStyles/componentStyles.css'
 
 function NoProducts({keyword}) {
   return (

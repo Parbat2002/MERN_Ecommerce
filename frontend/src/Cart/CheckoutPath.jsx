@@ -1,6 +1,6 @@
 import React from 'react'
-import '../CartStyles/CheckoutPath.css'
 import { AccountBalance, LibraryAddCheck, LocalShipping } from '@mui/icons-material'
+import '../cartStyles/CartStyles.css'
 
 function CheckoutPath({activePath}) {
     const path=[

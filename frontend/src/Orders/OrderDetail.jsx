@@ -7,7 +7,7 @@ import Footer from '../components/Footer'
 import Loader from '../components/Loader'
 import PageTitle from '../components/PageTitle'
 import { getSingleOrder, removeErrors } from '../features/order/orderSlice'
-import '../OrderStyles/OrderDetail.css'
+import '../orderStyles/OrderStyles.css'
 
 function OrderDetail() {
     const { id } = useParams()

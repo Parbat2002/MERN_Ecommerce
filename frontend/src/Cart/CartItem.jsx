@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { addItemsToCart, removeCartItem } from '../features/cart/cartSlice';
-
+import '../cartStyles/CartStyles.css'
 
 function CartItem({ item }) {
     const dispatch = useDispatch();

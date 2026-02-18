@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import '../componentStyles/Rating.css';
+import '../componentStyles/componentStyles.css'
 
 
 function Rating({ value, onRatingChange, disabled }) {

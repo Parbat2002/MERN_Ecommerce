@@ -8,8 +8,7 @@ import {
     getProductReviews, deleteReview,
     removeErrors, removeSuccess, clearReviews
 } from '../features/review/reviewSlice'
-import '../Admin/adminStyles/AdminLayout.css'
-import '../Admin/adminStyles/AdminReviews.css'
+import '../adminStyles/AdminStyles.css'
 
 function StarDisplay({ rating }) {
     return (
