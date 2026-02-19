@@ -1,99 +1,111 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 
 // ================= ADMIN: ALL USERS =================
 export const getAllUsers = createAsyncThunk(
-    "admin/getAllUsers",
+    'admin/getAllUsers',
     async (_, { rejectWithValue }) => {
         try {
-            const { data } = await axios.get("/api/v1/admin/users");
+            const { data } = await axios.get('/api/v1/admin/users');
             return data;
         } catch (error) {
-            return rejectWithValue(error.response?.data?.message || "Failed to fetch users");
+            return rejectWithValue(error.response?.data?.message || 'Failed to fetch users');
         }
     }
 );
 
 // ================= ADMIN: UPDATE USER ROLE =================
 export const updateUserRole = createAsyncThunk(
-    "admin/updateUserRole",
+    'admin/updateUserRole',
     async ({ id, role }, { rejectWithValue }) => {
         try {
             const { data } = await axios.put(`/api/v1/admin/user/${id}`, { role });
             return data;
         } catch (error) {
-            return rejectWithValue(error.response?.data?.message || "Failed to update user role");
+            return rejectWithValue(error.response?.data?.message || 'Failed to update user role');
         }
     }
 );
 
 // ================= ADMIN: DELETE USER =================
 export const deleteUser = createAsyncThunk(
-    "admin/deleteUser",
+    'admin/deleteUser',
     async (id, { rejectWithValue }) => {
         try {
             const { data } = await axios.delete(`/api/v1/admin/user/${id}`);
             return { ...data, id };
         } catch (error) {
-            return rejectWithValue(error.response?.data?.message || "Failed to delete user");
+            return rejectWithValue(error.response?.data?.message || 'Failed to delete user');
         }
     }
 );
 
 // ================= ADMIN: CREATE PRODUCT =================
+// productData.images should be a base64 DataURL string (single image from admin form)
+// Backend will upload it to Cloudinary
 export const createProduct = createAsyncThunk(
-    "admin/createProduct",
+    'admin/createProduct',
     async (productData, { rejectWithValue }) => {
         try {
-            const { data } = await axios.post("/api/v1/admin/product/create", productData);
+            // Wrap single base64 image string into an array so backend loop works
+            if (productData.images && typeof productData.images === 'string') {
+                productData = { ...productData, images: [productData.images] };
+            }
+            const config = { headers: { 'Content-Type': 'application/json' } };
+            const { data } = await axios.post('/api/v1/admin/product/create', productData, config);
             return data;
         } catch (error) {
-            return rejectWithValue(error.response?.data?.message || "Failed to create product");
+            return rejectWithValue(error.response?.data?.message || 'Failed to create product');
         }
     }
 );
 
 // ================= ADMIN: UPDATE PRODUCT =================
 export const updateProduct = createAsyncThunk(
-    "admin/updateProduct",
+    'admin/updateProduct',
     async ({ id, productData }, { rejectWithValue }) => {
         try {
-            const { data } = await axios.put(`/api/v1/admin/product/${id}`, productData);
+            // Wrap single base64 image string into an array so backend loop works
+            if (productData.images && typeof productData.images === 'string') {
+                productData = { ...productData, images: [productData.images] };
+            }
+            const config = { headers: { 'Content-Type': 'application/json' } };
+            const { data } = await axios.put(`/api/v1/admin/product/${id}`, productData, config);
             return data;
         } catch (error) {
-            return rejectWithValue(error.response?.data?.message || "Failed to update product");
+            return rejectWithValue(error.response?.data?.message || 'Failed to update product');
         }
     }
 );
 
 // ================= ADMIN: DELETE PRODUCT =================
 export const deleteProduct = createAsyncThunk(
-    "admin/deleteProduct",
+    'admin/deleteProduct',
     async (id, { rejectWithValue }) => {
         try {
             const { data } = await axios.delete(`/api/v1/admin/product/${id}`);
             return { ...data, id };
         } catch (error) {
-            return rejectWithValue(error.response?.data?.message || "Failed to delete product");
+            return rejectWithValue(error.response?.data?.message || 'Failed to delete product');
         }
     }
 );
 
 // ================= ADMIN: GET ALL PRODUCTS =================
 export const getAdminProducts = createAsyncThunk(
-    "admin/getAdminProducts",
+    'admin/getAdminProducts',
     async (_, { rejectWithValue }) => {
         try {
-            const { data } = await axios.get("/api/v1/admin/products");
+            const { data } = await axios.get('/api/v1/admin/products');
             return data;
         } catch (error) {
-            return rejectWithValue(error.response?.data?.message || "Failed to fetch products");
+            return rejectWithValue(error.response?.data?.message || 'Failed to fetch products');
         }
     }
 );
 
 const adminSlice = createSlice({
-    name: "admin",
+    name: 'admin',
     initialState: {
         users: [],
         products: [],
@@ -122,8 +134,8 @@ const adminSlice = createSlice({
             .addCase(updateUserRole.fulfilled, (state, action) => {
                 state.loading = false;
                 state.success = true;
-                state.message = "User role updated!";
-                const idx = state.users.findIndex(u => u._id === action.payload.user._id);
+                state.message = 'User role updated!';
+                const idx = state.users.findIndex((u) => u._id === action.payload.user._id);
                 if (idx !== -1) state.users[idx] = action.payload.user;
             })
             .addCase(updateUserRole.rejected, rejected)
@@ -132,8 +144,8 @@ const adminSlice = createSlice({
             .addCase(deleteUser.fulfilled, (state, action) => {
                 state.loading = false;
                 state.success = true;
-                state.message = "User deleted!";
-                state.users = state.users.filter(u => u._id !== action.payload.id);
+                state.message = 'User deleted!';
+                state.users = state.users.filter((u) => u._id !== action.payload.id);
             })
             .addCase(deleteUser.rejected, rejected)
 
@@ -148,7 +160,7 @@ const adminSlice = createSlice({
             .addCase(createProduct.fulfilled, (state, action) => {
                 state.loading = false;
                 state.success = true;
-                state.message = "Product created!";
+                state.message = 'Product created!';
                 state.products.push(action.payload.product);
             })
             .addCase(createProduct.rejected, rejected)
@@ -157,8 +169,8 @@ const adminSlice = createSlice({
             .addCase(updateProduct.fulfilled, (state, action) => {
                 state.loading = false;
                 state.success = true;
-                state.message = "Product updated!";
-                const idx = state.products.findIndex(p => p._id === action.payload.product._id);
+                state.message = 'Product updated!';
+                const idx = state.products.findIndex((p) => p._id === action.payload.product._id);
                 if (idx !== -1) state.products[idx] = action.payload.product;
             })
             .addCase(updateProduct.rejected, rejected)
@@ -167,11 +179,11 @@ const adminSlice = createSlice({
             .addCase(deleteProduct.fulfilled, (state, action) => {
                 state.loading = false;
                 state.success = true;
-                state.message = "Product deleted!";
-                state.products = state.products.filter(p => p._id !== action.payload.id);
+                state.message = 'Product deleted!';
+                state.products = state.products.filter((p) => p._id !== action.payload.id);
             })
-            .addCase(deleteProduct.rejected, rejected)
-    }
+            .addCase(deleteProduct.rejected, rejected);
+    },
 });
 
 export const { removeErrors, removeSuccess } = adminSlice.actions;

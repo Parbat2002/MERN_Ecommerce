@@ -16,7 +16,7 @@ router.route("/logout")
 router.route("/password/forgot")
 .post(requestPasswordReset);
 
-router.route("/reset/:token")
+router.route("/password/reset/:token")
 .post(resetPassword);
 
 router.route("/profile")

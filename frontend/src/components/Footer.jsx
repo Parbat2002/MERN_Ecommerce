@@ -31,7 +31,7 @@ function Footer() {
                         </a>
                     </div>
                 </div>
-                <br /><br />
+                
                 {/* Section3 */}
                 
                 <div className="footer-section about">

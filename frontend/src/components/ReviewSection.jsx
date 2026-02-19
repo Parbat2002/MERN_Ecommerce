@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { toast } from 'react-toastify'
 import { Star, StarBorder, Delete } from '@mui/icons-material'
+import { toast } from 'react-toastify'
 import {
     createReview, getProductReviews, deleteReview,
     removeErrors, removeSuccess
@@ -72,7 +72,6 @@ function ReviewSection({ productId }) {
             setRating(0)
             setComment('')
             setShowForm(false)
-            // refresh reviews after submit
             dispatch(getProductReviews(productId))
         }
     }, [error, success, message, dispatch, productId])
@@ -88,7 +87,6 @@ function ReviewSection({ productId }) {
         dispatch(deleteReview({ reviewId, productId }))
     }
 
-    // pre-fill if user already reviewed
     const myReview = reviews.find(r => r.user?.toString() === user?._id?.toString())
 
     const openForm = () => {
@@ -116,7 +114,7 @@ function ReviewSection({ productId }) {
             <div className="review-summary">
                 <div className="review-avg-block">
                     <span className="review-avg-number">{avgRating}</span>
-                    <StarDisplay rating={avgRating} size="1.3rem" />
+                    <StarDisplay rating={Number(avgRating)} size="1.3rem" />
                     <span className="review-avg-count">{reviews.length} review{reviews.length !== 1 ? 's' : ''}</span>
                 </div>
                 <div className="review-breakdown">

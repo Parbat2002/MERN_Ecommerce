@@ -1,73 +1,74 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 
 // ================= MY ORDERS =================
 export const getMyOrders = createAsyncThunk(
-    "order/getMyOrders",
+    'order/getMyOrders',
     async (_, { rejectWithValue }) => {
         try {
-            const { data } = await axios.get("/api/v1/orders/user");
+            const { data } = await axios.get('/api/v1/orders/user');
             return data;
         } catch (error) {
-            return rejectWithValue(error.response?.data?.message || "Failed to fetch orders");
+            return rejectWithValue(error.response?.data?.message || 'Failed to fetch orders');
         }
     }
 );
 
-// ================= SINGLE ORDER =================
+// ================= SINGLE ORDER (user's own order) =================
 export const getSingleOrder = createAsyncThunk(
-    "order/getSingleOrder",
+    'order/getSingleOrder',
     async (id, { rejectWithValue }) => {
         try {
-            const { data } = await axios.get(`/api/v1/admin/order/${id}`);
+            // Uses the user-level route — backend verifies ownership
+            const { data } = await axios.get(`/api/v1/order/${id}`);
             return data;
         } catch (error) {
-            return rejectWithValue(error.response?.data?.message || "Failed to fetch order");
+            return rejectWithValue(error.response?.data?.message || 'Failed to fetch order');
         }
     }
 );
 
 // ================= ADMIN: ALL ORDERS =================
 export const getAllOrders = createAsyncThunk(
-    "order/getAllOrders",
+    'order/getAllOrders',
     async (_, { rejectWithValue }) => {
         try {
-            const { data } = await axios.get("/api/v1/admin/orders");
+            const { data } = await axios.get('/api/v1/admin/orders');
             return data;
         } catch (error) {
-            return rejectWithValue(error.response?.data?.message || "Failed to fetch all orders");
+            return rejectWithValue(error.response?.data?.message || 'Failed to fetch all orders');
         }
     }
 );
 
 // ================= ADMIN: UPDATE ORDER STATUS =================
 export const updateOrderStatus = createAsyncThunk(
-    "order/updateOrderStatus",
+    'order/updateOrderStatus',
     async ({ id, status }, { rejectWithValue }) => {
         try {
             const { data } = await axios.put(`/api/v1/admin/order/${id}`, { status });
             return data;
         } catch (error) {
-            return rejectWithValue(error.response?.data?.message || "Failed to update order");
+            return rejectWithValue(error.response?.data?.message || 'Failed to update order');
         }
     }
 );
 
 // ================= ADMIN: DELETE ORDER =================
 export const deleteOrder = createAsyncThunk(
-    "order/deleteOrder",
+    'order/deleteOrder',
     async (id, { rejectWithValue }) => {
         try {
             const { data } = await axios.delete(`/api/v1/admin/order/${id}`);
             return { ...data, id };
         } catch (error) {
-            return rejectWithValue(error.response?.data?.message || "Failed to delete order");
+            return rejectWithValue(error.response?.data?.message || 'Failed to delete order');
         }
     }
 );
 
 const orderSlice = createSlice({
-    name: "order",
+    name: 'order',
     initialState: {
         orders: [],
         order: null,
@@ -125,7 +126,7 @@ const orderSlice = createSlice({
             .addCase(updateOrderStatus.fulfilled, (state, action) => {
                 state.loading = false;
                 state.success = true;
-                state.message = "Order status updated!";
+                state.message = 'Order status updated!';
                 const idx = state.orders.findIndex(o => o._id === action.payload.order._id);
                 if (idx !== -1) state.orders[idx] = action.payload.order;
             })
@@ -140,7 +141,7 @@ const orderSlice = createSlice({
             .addCase(deleteOrder.fulfilled, (state, action) => {
                 state.loading = false;
                 state.success = true;
-                state.message = "Order deleted!";
+                state.message = 'Order deleted!';
                 state.orders = state.orders.filter(o => o._id !== action.payload.id);
             })
             .addCase(deleteOrder.rejected, (state, action) => {

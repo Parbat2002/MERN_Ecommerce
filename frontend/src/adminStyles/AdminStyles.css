@@ -1370,6 +1370,172 @@ body {
 }
 
 /* ══════════════════════════════════════════════════════════════
+   ADDITIONAL CLASSES (JSX AUDIT — AdminProducts · AdminOrders
+   AdminUsers · AdminDashboard · AdminReviews · AdminLayout)
+══════════════════════════════════════════════════════════════ */
+
+/* ── Product thumbnail in AdminProducts table ───────────────── */
+.product-thumb {
+  width: 46px;
+  height: 46px;
+  border-radius: var(--r-md);
+  object-fit: cover;
+  border: 1px solid var(--border);
+  background: var(--bg-deep);
+  display: block;
+  transition: transform var(--dur-base) var(--ease-spring), box-shadow var(--dur-fast);
+}
+.admin-table tbody tr:hover .product-thumb {
+  transform: scale(1.08);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ── Stat info wrapper ──────────────────────────────────────── */
+.stat-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+/* ── Filter buttons — proper class (inline styles in JSX
+      use !important to win specificity battle)             ── */
+.filter-btn {
+  height: 34px;
+  padding: 0 1rem !important;
+  border: 1.5px solid var(--border-strong) !important;
+  background: var(--surface-solid) !important;
+  color: var(--text-secondary) !important;
+  border-radius: 100px !important;
+  font-family: var(--font-body) !important;
+  font-size: 0.82rem !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  white-space: nowrap;
+  transition:
+    background var(--dur-fast),
+    color var(--dur-fast),
+    border-color var(--dur-fast),
+    transform var(--dur-base) var(--ease-spring),
+    box-shadow var(--dur-fast) !important;
+}
+.filter-btn:hover {
+  background: var(--bg-deep) !important;
+  color: var(--text-primary) !important;
+  transform: translateY(-1px);
+}
+.filter-btn.active {
+  background: var(--ink) !important;
+  color: #fff !important;
+  border-color: var(--ink) !important;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.22);
+  transform: translateY(-1px);
+}
+.filter-btn:active { transform: scale(0.95) !important; }
+
+/* Scrollable filter row wrapper */
+.admin-filter-row {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 2px;
+}
+.admin-filter-row::-webkit-scrollbar { display: none; }
+
+/* ── Modal form row (price + stock 2-col in ProductForm) ─────── */
+.modal-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+/* ── Category pill ──────────────────────────────────────────── */
+.category-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.18rem 0.6rem;
+  background: var(--bg-deep);
+  border-radius: var(--r-xs);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+/* ── Stock color helpers ─────────────────────────────────────── */
+.stock-out { font-weight: 700; color: var(--red); }
+.stock-low { font-weight: 700; color: var(--orange); }
+.stock-ok  { font-weight: 700; color: var(--green); }
+
+/* ── Image preview in modal (AdminProducts ProductForm) ──────── */
+.modal-image-preview-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.modal-image-preview-row img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.modal-file-input {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  flex: 1;
+  min-width: 0;
+}
+.modal-file-input::file-selector-button {
+  height: 30px;
+  padding: 0 0.75rem;
+  margin-right: 0.75rem;
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  border-radius: var(--r-sm);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--dur-fast), transform var(--dur-base) var(--ease-spring);
+}
+.modal-file-input::file-selector-button:hover {
+  background: #2c2c2e;
+  transform: scale(1.04);
+}
+
+/* ── Order ID note in edit modal ────────────────────────────── */
+.modal-order-note {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.25rem;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+}
+
+/* ── User info row inside edit role modal ───────────────────── */
+.modal-user-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  padding: 0.85rem 1rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+}
+.modal-user-row .user-avatar-small { width: 44px; height: 44px; flex-shrink: 0; }
+.modal-user-name  { font-weight: 600; font-size: 0.9rem; color: var(--text-primary); }
+.modal-user-email { font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.1rem; }
+
+/* ══════════════════════════════════════════════════════════════
    RESPONSIVE — ADMIN
    Breakpoints: 1280 · 1100 · 1024 · 768 · 480 · 360
 ══════════════════════════════════════════════════════════════ */

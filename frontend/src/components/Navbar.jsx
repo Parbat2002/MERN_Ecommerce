@@ -16,7 +16,7 @@ function Navbar() {
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-    const {isAuthenticated}=useSelector(state=>state.user);
+    const {isAuthenticated,user}=useSelector(state=>state.user);
     const {cartItems}=useSelector(state=>state.cart);
     const navigate=useNavigate();
     const handleSearchSubmit = (e) => {
@@ -71,6 +71,9 @@ function Navbar() {
                 {!isAuthenticated && <Link to="/register" className='register-link'>
                     <PersonAddIcon className="icon" />
                 </Link>}
+
+              
+                
                 <div className="navbar-hamburger" onClick={toggleMenu}>
                     {isMenuOpen ? <CloseIcon className="icon" /> : <MenuIcon className="icon" />}
 

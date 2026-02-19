@@ -25,7 +25,7 @@ function Products() {
     const pageFromURL = parseInt(searchParams.get('page'), 10) || 1;
     const [currentPage, setCurrentPage] = useState(pageFromURL);
     const navigate = useNavigate();
-    const categories = ["laptop","mobile","tv","fruits","glass"];
+    const categories = ["Electronics","Clothing","Footwear","Books","Beauty","Sports","Toys","Others"];
 
     // Sync local state if URL page changes
     useEffect(() => {

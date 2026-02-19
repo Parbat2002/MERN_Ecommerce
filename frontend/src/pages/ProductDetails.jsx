@@ -14,6 +14,9 @@ import { addItemsToCart } from '../features/cart/cartSlice';
 import ReviewSection from '../components/ReviewSection';
 
 function ProductDetails() {
+    const { loading, error, product } = useSelector((state) => state.product);
+    const dispatch = useDispatch();
+    const { id } = useParams();
     const [quantity, setQuantity] = useState(1);
     const [activeImage, setActiveImage] = useState(0);
 
@@ -38,9 +41,7 @@ function ProductDetails() {
         toast.success(`${product.name} added to cart!`, { position: 'top-center', autoClose: 2000 });
     };
 
-    const { loading, error, product } = useSelector((state) => state.product);
-    const dispatch = useDispatch();
-    const { id } = useParams();
+
 
     useEffect(() => {
         if (id) dispatch(getProductDetails(id));
@@ -101,7 +102,10 @@ function ProductDetails() {
                         <h1 className="product-name">{product.name}</h1>
 
                         <div className="product-rating-row">
-                            <Rating rating={product.ratings} />
+                            <Rating
+                                value={product.ratings}
+                                disabled={true}
+                            />
                             <span className="product-review-count">
                                 ({product.numberOfReviews} review{product.numberOfReviews !== 1 ? 's' : ''})
                             </span>

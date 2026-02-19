@@ -95,9 +95,7 @@ export const requestPasswordReset = handleAsyncError(async (req, res, next) => {
     );
   }
 
-  const resetPasswordURL = `${req.protocol}://${req.get(
-    "host"
-  )}/reset/${resetToken}`;
+  const resetPasswordURL = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`
 
   const message = `Use this link to reset your password:\n\n${resetPasswordURL}\n\nExpires in 2 minutes.\n\nIf you did not request this, ignore this email.`;
 

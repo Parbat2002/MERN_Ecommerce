@@ -46,27 +46,60 @@ function AdminProducts() {
         const file = e.target.files[0]
         if (!file) return
         const reader = new FileReader()
-        reader.onload = () => { setImagePreview(reader.result); setForm(f => ({ ...f, images: reader.result })) }
+        reader.onload = () => {
+            // Store the base64 DataURL — backend will upload it to Cloudinary
+            setImagePreview(reader.result)
+            setForm(f => ({ ...f, images: reader.result }))
+        }
         reader.readAsDataURL(file)
     }
 
     const handleCreate = () => {
         const { name, description, price, category, stock, images } = form
-        if (!name || !description || !price || !category || !stock) { toast.error('Please fill all fields'); return }
-        const productData = { name, description, price: Number(price), category, stock: Number(stock) }
-        if (images) productData.images = [{ url: images, public_id: 'local_' + Date.now() }]
+        if (!name || !description || !price || !category || !stock) {
+            toast.error('Please fill all required fields')
+            return
+        }
+        const productData = {
+            name,
+            description,
+            price: Number(price),
+            category,
+            stock: Number(stock),
+        }
+        // images is a base64 DataURL string; adminSlice wraps it in an array for backend
+        if (images) productData.images = images
         dispatch(createProduct(productData))
     }
 
     const handleUpdate = () => {
-        const { name, description, price, category, stock } = form
-        if (!name || !description || !price || !category || !stock) { toast.error('Please fill all fields'); return }
-        dispatch(updateProduct({ id: editModal._id, productData: { name, description, price: Number(price), category, stock: Number(stock) } }))
+        const { name, description, price, category, stock, images } = form
+        if (!name || !description || !price || !category || !stock) {
+            toast.error('Please fill all required fields')
+            return
+        }
+        const productData = {
+            name,
+            description,
+            price: Number(price),
+            category,
+            stock: Number(stock),
+        }
+        // Only send new image if user chose one; otherwise backend keeps existing images
+        if (images) productData.images = images
+        dispatch(updateProduct({ id: editModal._id, productData }))
     }
 
     const openEdit = (product) => {
         setEditModal(product)
-        setForm({ name: product.name, description: product.description, price: product.price, category: product.category, stock: product.stock, images: '' })
+        setForm({
+            name: product.name,
+            description: product.description,
+            price: product.price,
+            category: product.category,
+            stock: product.stock,
+            images: '', // don't re-send existing Cloudinary image
+        })
         setImagePreview(product.image?.[0]?.url || '')
     }
 
@@ -87,7 +120,11 @@ function AdminProducts() {
             <div className="modal-form-group">
                 <label>Product Image</label>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                    {imagePreview && <img src={imagePreview} alt="preview" style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: 8, border: '1px solid #f0f0f0' }} />}
+                    {imagePreview && (
+                        <img src={imagePreview} alt="preview"
+                            style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: 8, border: '1px solid #f0f0f0' }}
+                        />
+                    )}
                     <input type="file" accept="image/*" onChange={handleImageChange} style={{ fontSize: '0.85rem' }} />
                 </div>
             </div>
@@ -117,7 +154,9 @@ function AdminProducts() {
                 </select>
             </div>
             <div className="modal-btns">
-                <button className="modal-cancel-btn" onClick={() => { setCreateModal(false); setEditModal(null); setForm(emptyForm); setImagePreview('') }}>Cancel</button>
+                <button className="modal-cancel-btn" onClick={() => {
+                    setCreateModal(false); setEditModal(null); setForm(emptyForm); setImagePreview('')
+                }}>Cancel</button>
                 <button className="modal-submit-btn" onClick={onSubmit} disabled={loading}>
                     {loading ? 'Saving...' : submitLabel}
                 </button>
@@ -132,7 +171,9 @@ function AdminProducts() {
                     <h1 className="admin-page-title">Products</h1>
                     <p className="admin-page-subtitle">{products.length} products in store</p>
                 </div>
-                <button className="admin-primary-btn" onClick={() => { setForm(emptyForm); setImagePreview(''); setCreateModal(true) }}>
+                <button className="admin-primary-btn" onClick={() => {
+                    setForm(emptyForm); setImagePreview(''); setCreateModal(true)
+                }}>
                     <Add fontSize="small" /> Add Product
                 </button>
             </div>
@@ -141,7 +182,12 @@ function AdminProducts() {
             <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.25rem', flexWrap: 'wrap' }}>
                 {categories.map(c => (
                     <button key={c} onClick={() => { setCategoryFilter(c); setPage(1) }}
-                        style={{ padding: '0.4rem 1rem', border: '1.5px solid #e0e0e0', background: categoryFilter === c ? '#0d0d0d' : 'white', color: categoryFilter === c ? 'white' : '#555', borderRadius: '20px', cursor: 'pointer', fontSize: '0.85rem', transition: 'all 0.18s' }}
+                        style={{
+                            padding: '0.4rem 1rem', border: '1.5px solid #e0e0e0',
+                            background: categoryFilter === c ? '#0d0d0d' : 'white',
+                            color: categoryFilter === c ? 'white' : '#555',
+                            borderRadius: '20px', cursor: 'pointer', fontSize: '0.85rem', transition: 'all 0.18s'
+                        }}
                     >{c}</button>
                 ))}
             </div>
