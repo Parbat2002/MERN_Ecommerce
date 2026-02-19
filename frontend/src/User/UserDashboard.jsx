@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import '../userStyles/UserStyles.css'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';

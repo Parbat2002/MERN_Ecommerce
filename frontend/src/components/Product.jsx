@@ -7,14 +7,18 @@ import Rating from './Rating';
 function Product({product}) {
   const[rating,setRating]= useState(0);
 const handleRatingChange=(newRating)=>{
-  setRating(rating) 
+  setRating(newRating) 
   console.log(`rating changed to ${newRating}`);
   
 }
   return (
     <Link to={`/product/${product._id}`} className='product_id'>
   <div className="product-card">
-    <img src={product.image[0].url} alt={product.name} className='product-image-card' />
+    <img 
+  src={product.image && product.image.length > 0 ? product.image[0].url : '/placeholder.png'} 
+  alt={product.name} 
+  className='product-image-card' 
+/>
     <div className="product-details">
         <h3 className="product-title">{product.name}</h3>
         <p className="home-price"><strong>Price</strong>{product.price}</p>

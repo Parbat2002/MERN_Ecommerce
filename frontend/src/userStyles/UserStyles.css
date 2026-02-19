@@ -1,0 +1,849 @@
+/* ============================================================
+   UserStyles.css — Apple-Grade Modern UI
+   Aesthetic: Liquid Glass · Refined Minimalism · Silk Motion
+   Covers: ForgotPassword · Login · Profile · Register
+           ResetPassword · UpdatePassword · UpdateProfile
+           UserDashboard
+   ============================================================ */
+
+/* ── Google Fonts ─────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Geist:wght@300;400;500;600&display=swap');
+
+/* ── Design Tokens ─────────────────────────────────────────── */
+:root {
+  --bg:            #f5f5f7;
+  --bg-deep:       #e8e8ed;
+  --surface:       rgba(255,255,255,0.82);
+  --surface-solid: #ffffff;
+  --surface-hover: rgba(255,255,255,0.95);
+  --border:        rgba(0,0,0,0.07);
+  --border-strong: rgba(0,0,0,0.12);
+
+  --shadow-xs: 0 1px 3px rgba(0,0,0,0.05);
+  --shadow-sm: 0 4px 16px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04);
+  --shadow-md: 0 10px 36px rgba(0,0,0,0.09), 0 2px 8px rgba(0,0,0,0.05);
+  --shadow-lg: 0 24px 64px rgba(0,0,0,0.14), 0 4px 16px rgba(0,0,0,0.08);
+  --shadow-form: 0 32px 80px rgba(0,0,0,0.12), 0 8px 24px rgba(0,0,0,0.07);
+
+  --font-display: 'Syne', sans-serif;
+  --font-body:    'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --text-primary:   #1d1d1f;
+  --text-secondary: #6e6e73;
+  --text-tertiary:  #aeaeb2;
+
+  --blue:        #007aff;
+  --blue-soft:   #e8f1ff;
+  --green:       #34c759;
+  --green-soft:  #e8f8ed;
+  --red:         #ff3b30;
+  --red-soft:    #fff0ef;
+  --orange:      #ff9f0a;
+  --ink:         #0d0d0d;
+  --ink-soft:    #1c1c1e;
+
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out:    cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --dur-fast:    120ms;
+  --dur-base:    220ms;
+  --dur-slow:    380ms;
+
+  --r-xs:  6px;
+  --r-sm:  10px;
+  --r-md:  14px;
+  --r-lg:  20px;
+  --r-xl:  28px;
+  --r-2xl: 36px;
+}
+
+/* ── Base ───────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+a { text-decoration: none; color: inherit; }
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   SHARED FORM SYSTEM
+   Used by: Login, Register, ForgotPassword,
+            ResetPassword, UpdatePassword, UpdateProfile
+══════════════════════════════════════════════════════════════ */
+
+/* Page centering wrapper */
+.container {
+  min-height: calc(100vh - 64px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.25rem;
+  background: var(--bg);
+}
+
+/* Decorative background mesh */
+.container::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 20%, rgba(0,122,255,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 80% 80%, rgba(175,82,222,0.05) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Form card wrapper */
+.form-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* Form card */
+.form-content {
+  width: 100%;
+  max-width: 420px;
+  background: var(--surface-solid);
+  border: 1px solid var(--border);
+  border-radius: var(--r-2xl);
+  padding: 2.5rem 2.25rem;
+  box-shadow: var(--shadow-form);
+  position: relative;
+  overflow: hidden;
+  animation: scaleIn var(--dur-slow) var(--ease-spring) both;
+}
+
+/* Subtle gloss on top edge */
+.form-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.8) 50%, transparent 100%);
+  pointer-events: none;
+}
+
+/* Forgot / Update container (not centered vertically, sits below navbar) */
+.forgot-container,
+.update-container {
+  align-items: flex-start;
+  padding-top: 3rem;
+}
+
+/* Form element */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Form title */
+.form h2 {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+  text-align: center;
+}
+
+/* ── Input group ────────────────────────────────────────────── */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  position: relative;
+}
+
+.input-group input[type="text"],
+.input-group input[type="email"],
+.input-group input[type="password"],
+.input-group input[type="number"] {
+  width: 100%;
+  height: 46px;
+  padding: 0 1rem;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--r-lg);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  background: var(--bg);
+  outline: none;
+  transition:
+    border-color var(--dur-fast),
+    box-shadow var(--dur-fast),
+    background var(--dur-fast),
+    transform var(--dur-base) var(--ease-spring);
+}
+
+.input-group input:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 4px rgba(0,122,255,0.1);
+  background: var(--surface-solid);
+  transform: translateY(-1px);
+}
+
+.input-group input::placeholder {
+  color: var(--text-tertiary);
+  font-size: 0.875rem;
+}
+
+/* ── Avatar / file group ────────────────────────────────────── */
+.avatar-group {
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  background: var(--bg);
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--r-lg);
+  padding: 0.75rem 1rem;
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+}
+
+.avatar-group:focus-within {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 4px rgba(0,122,255,0.1);
+}
+
+.file-input {
+  flex: 1;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  min-width: 0;
+}
+
+.file-input::file-selector-button {
+  height: 30px;
+  padding: 0 0.75rem;
+  margin-right: 0.75rem;
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  border-radius: var(--r-sm);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--dur-fast), transform var(--dur-base) var(--ease-spring);
+}
+
+.file-input::file-selector-button:hover {
+  background: #2c2c2e;
+  transform: scale(1.04);
+}
+
+/* Avatar preview */
+.avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--border-strong);
+  background: var(--bg-deep);
+  flex-shrink: 0;
+  transition: transform var(--dur-base) var(--ease-spring), border-color var(--dur-fast);
+}
+
+.avatar:hover {
+  transform: scale(1.08);
+  border-color: var(--blue);
+}
+
+/* ── Auth button ────────────────────────────────────────────── */
+.authBtn {
+  width: 100%;
+  height: 48px;
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  border-radius: var(--r-lg);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  margin-top: 0.25rem;
+  transition:
+    background var(--dur-fast),
+    transform var(--dur-base) var(--ease-spring),
+    box-shadow var(--dur-fast);
+}
+
+.authBtn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.09) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.authBtn:hover:not(:disabled) {
+  background: #2c2c2e;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.24);
+}
+
+.authBtn:active:not(:disabled) { transform: scale(0.97); box-shadow: none; }
+
+.authBtn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ── Form links ─────────────────────────────────────────────── */
+.form-links {
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.form-links a {
+  color: var(--blue);
+  font-weight: 600;
+  margin-left: 0.3rem;
+  transition: opacity var(--dur-fast);
+}
+
+.form-links a:hover { opacity: 0.72; }
+
+/* email-group: specific max-width for forgot password (simpler form) */
+.email-group {
+  max-width: 380px;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   PROFILE PAGE
+══════════════════════════════════════════════════════════════ */
+.profile-container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  animation: fadeSlideUp var(--dur-slow) var(--ease-out) both;
+}
+
+/* ── Profile image card ──────────────────────────────────────── */
+.profile-image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-2xl);
+  padding: 2.5rem 2rem 2rem;
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow var(--dur-base), transform var(--dur-base) var(--ease-spring);
+}
+
+/* decorative blob */
+.profile-image::before {
+  content: '';
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,122,255,0.06) 0%, transparent 70%);
+  top: -100px;
+  right: -80px;
+  pointer-events: none;
+}
+
+.profile-image:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.profile-heading {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-tertiary);
+  align-self: flex-start;
+}
+
+/* Avatar image inside profile */
+.profile-image img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--surface-solid);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12), 0 0 0 1px var(--border);
+  background: var(--bg-deep);
+  transition: transform var(--dur-base) var(--ease-spring), box-shadow var(--dur-base);
+}
+
+.profile-image img:hover {
+  transform: scale(1.06);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.18), 0 0 0 1px var(--border);
+}
+
+/* Edit Profile link */
+.profile-image > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  height: 36px;
+  padding: 0 1.1rem;
+  background: var(--bg-deep);
+  color: var(--text-secondary);
+  border: 1.5px solid var(--border-strong);
+  border-radius: 100px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  transition:
+    background var(--dur-fast),
+    color var(--dur-fast),
+    border-color var(--dur-fast),
+    transform var(--dur-base) var(--ease-spring),
+    box-shadow var(--dur-fast);
+}
+
+.profile-image > a:hover {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+}
+
+/* ── Profile details card ────────────────────────────────────── */
+.profile-details {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--dur-base), transform var(--dur-base) var(--ease-spring);
+}
+
+.profile-details:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.profile-detail {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  gap: 1rem;
+  transition: background var(--dur-fast);
+}
+
+.profile-detail:last-child { border-bottom: none; }
+.profile-detail:hover { background: rgba(0,122,255,0.02); }
+
+.profile-detail h2 {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+
+.profile-detail p {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  text-align: right;
+  word-break: break-all;
+}
+
+/* ── Profile action buttons ──────────────────────────────────── */
+.profile-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.profile-buttons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 46px;
+  border-radius: var(--r-lg);
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  transition:
+    background var(--dur-fast),
+    color var(--dur-fast),
+    transform var(--dur-base) var(--ease-spring),
+    box-shadow var(--dur-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-buttons a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.profile-buttons a:first-child {
+  background: var(--ink);
+  color: #fff;
+}
+
+.profile-buttons a:first-child:hover {
+  background: #2c2c2e;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.22);
+}
+
+.profile-buttons a:last-child {
+  background: var(--surface-solid);
+  color: var(--text-primary);
+  border: 1.5px solid var(--border-strong);
+}
+
+.profile-buttons a:last-child:hover {
+  background: var(--bg-deep);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.profile-buttons a:active { transform: scale(0.97); }
+
+
+/* ══════════════════════════════════════════════════════════════
+   USER DASHBOARD (floating avatar menu)
+══════════════════════════════════════════════════════════════ */
+.dashboard-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* Avatar + name trigger */
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0.75rem 0.4rem 0.4rem;
+  border-radius: 100px;
+  cursor: pointer;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-xs);
+  user-select: none;
+  transition:
+    background var(--dur-fast),
+    box-shadow var(--dur-fast),
+    transform var(--dur-base) var(--ease-spring);
+}
+
+.profile-header:hover {
+  background: var(--surface-hover);
+  box-shadow: var(--shadow-sm);
+  transform: scale(1.03);
+}
+
+.profile-header:active { transform: scale(0.97); }
+
+.profile-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--border-strong);
+  background: var(--bg-deep);
+  flex-shrink: 0;
+}
+
+.profile-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  max-width: 120px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Dropdown menu */
+.menu-options {
+  position: absolute;
+  top: calc(100% + 0.6rem);
+  right: 0;
+  min-width: 180px;
+  background: var(--surface-solid);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 0.4rem;
+  box-shadow: var(--shadow-lg);
+  z-index: 300;
+  animation: dropdownPop var(--dur-slow) var(--ease-spring) both;
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+}
+
+@keyframes dropdownPop {
+  from { opacity: 0; transform: scale(0.88) translateY(-8px); transform-origin: top right; }
+  to   { opacity: 1; transform: scale(1) translateY(0); transform-origin: top right; }
+}
+
+.menu-option-btn {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0.6rem 0.85rem;
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: var(--r-sm);
+  text-align: left;
+  transition:
+    background var(--dur-fast),
+    color var(--dur-fast),
+    transform var(--dur-base) var(--ease-spring);
+  white-space: nowrap;
+}
+
+.menu-option-btn:hover {
+  background: rgba(0,0,0,0.05);
+  color: var(--ink);
+  transform: translateX(3px);
+}
+
+/* Cart has items indicator */
+.menu-option-btn.cart-not-empty {
+  color: var(--blue);
+  font-weight: 600;
+}
+
+.menu-option-btn.cart-not-empty::after {
+  content: '●';
+  margin-left: auto;
+  font-size: 0.45rem;
+  color: var(--red);
+}
+
+/* Overlay behind dropdown on mobile */
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 299;
+  background: transparent;
+}
+
+.overlay.show { display: block; }
+
+
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE
+   Breakpoints: 1024 · 768 · 600 · 480 · 360
+══════════════════════════════════════════════════════════════ */
+
+/* ── 1024px ─────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .container { padding: 1.75rem 1rem; }
+  .form-content { padding: 2.25rem 2rem; }
+}
+
+/* ── 768px ──────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .container { padding: 1.5rem 1rem; min-height: calc(100vh - 56px); }
+
+  .form-content {
+    padding: 2rem 1.5rem;
+    border-radius: var(--r-xl);
+  }
+
+  .form h2 { font-size: 1.45rem; }
+
+  /* Profile */
+  .profile-container { padding: 1.75rem 1rem 3rem; }
+  .profile-image { padding: 2rem 1.5rem 1.75rem; }
+  .profile-image img { width: 88px; height: 88px; }
+
+  /* Dashboard dropdown: slightly narrower name */
+  .profile-name { max-width: 90px; }
+}
+
+/* ── 600px ──────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .container {
+    padding: 1.25rem 0.85rem;
+    align-items: flex-start;
+    padding-top: 1.75rem;
+  }
+
+  .form-content {
+    padding: 1.75rem 1.25rem;
+    border-radius: var(--r-xl);
+    max-width: 100%;
+  }
+
+  .email-group { max-width: 100%; }
+
+  .form h2 { font-size: 1.35rem; }
+  .authBtn { height: 44px; font-size: 0.9rem; }
+
+  /* Profile */
+  .profile-container { padding: 1.25rem 0.75rem 2.5rem; gap: 1.1rem; }
+  .profile-detail { padding: 0.85rem 1.1rem; }
+  .profile-detail h2 { font-size: 0.72rem; }
+  .profile-detail p { font-size: 0.85rem; }
+  .profile-buttons { grid-template-columns: 1fr; }
+  .profile-buttons a { height: 44px; }
+}
+
+/* ── 480px ──────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .container { padding: 1rem 0.65rem; padding-top: 1.5rem; }
+
+  .form-content {
+    padding: 1.5rem 1.1rem;
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-md);
+  }
+
+  .form h2 { font-size: 1.25rem; }
+
+  .input-group input[type="text"],
+  .input-group input[type="email"],
+  .input-group input[type="password"],
+  .input-group input[type="number"] {
+    height: 44px;
+    font-size: 0.875rem;
+    border-radius: var(--r-md);
+  }
+
+  .authBtn {
+    height: 44px;
+    font-size: 0.875rem;
+    border-radius: var(--r-md);
+  }
+
+  .avatar-group { padding: 0.6rem 0.75rem; gap: 0.65rem; }
+  .avatar { width: 44px; height: 44px; }
+
+  /* Profile */
+  .profile-container { padding: 1rem 0.65rem 2.5rem; }
+  .profile-image { padding: 1.75rem 1.25rem 1.5rem; border-radius: var(--r-xl); }
+  .profile-image img { width: 80px; height: 80px; }
+  .profile-details { border-radius: var(--r-lg); }
+
+  /* Dashboard */
+  .profile-name { max-width: 70px; font-size: 0.8rem; }
+  .menu-options { min-width: 160px; }
+  .menu-option-btn { font-size: 0.82rem; padding: 0.55rem 0.75rem; }
+}
+
+/* ── 360px ──────────────────────────────────────────────────── */
+@media (max-width: 360px) {
+  .container { padding: 0.75rem 0.5rem; padding-top: 1.25rem; }
+
+  .form-content { padding: 1.25rem 0.9rem; border-radius: var(--r-lg); }
+  .form h2 { font-size: 1.15rem; }
+
+  .input-group input[type="text"],
+  .input-group input[type="email"],
+  .input-group input[type="password"],
+  .input-group input[type="number"] {
+    height: 42px;
+    font-size: 0.84rem;
+    padding: 0 0.85rem;
+    border-radius: var(--r-md);
+  }
+
+  .authBtn { height: 42px; font-size: 0.84rem; }
+
+  .avatar { width: 38px; height: 38px; }
+  .file-input { font-size: 0.75rem; }
+  .file-input::file-selector-button { height: 26px; padding: 0 0.55rem; font-size: 0.72rem; }
+
+  .profile-container { padding: 0.75rem 0.5rem 2rem; gap: 0.9rem; }
+  .profile-image { padding: 1.5rem 1rem 1.25rem; border-radius: var(--r-lg); }
+  .profile-image img { width: 70px; height: 70px; }
+  .profile-detail { padding: 0.7rem 0.9rem; }
+  .profile-detail h2 { font-size: 0.68rem; }
+  .profile-detail p { font-size: 0.8rem; }
+  .profile-buttons a { height: 40px; font-size: 0.82rem; border-radius: var(--r-md); }
+
+  .profile-name { max-width: 56px; font-size: 0.75rem; }
+  .profile-avatar { width: 28px; height: 28px; }
+  .menu-options { min-width: 150px; right: -0.5rem; }
+}
+
+/* ── Touch: disable hover transforms ────────────────────────── */
+@media (hover: none) and (pointer: coarse) {
+  .form-content        { animation: fadeSlideUp var(--dur-slow) var(--ease-out) both; }
+  .authBtn:hover       { transform: none; box-shadow: none; }
+  .profile-image:hover { transform: none; box-shadow: var(--shadow-sm); }
+  .profile-image img:hover { transform: none; }
+  .profile-image > a:hover { transform: none; box-shadow: none; }
+  .profile-details:hover { transform: none; box-shadow: var(--shadow-sm); }
+  .profile-buttons a:hover { transform: none; box-shadow: none; }
+  .profile-header:hover { transform: none; box-shadow: var(--shadow-xs); }
+  .menu-option-btn:hover { transform: none; }
+  .input-group input:focus { transform: none; }
+}
+
+/* ── Focus ring ─────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── Scrollbar ─────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 100px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-tertiary); }
