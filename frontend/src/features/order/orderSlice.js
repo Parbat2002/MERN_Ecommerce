@@ -14,6 +14,19 @@ export const getMyOrders = createAsyncThunk(
     }
 );
 
+//================ ADMIN GET USER ORDER DETAILS =================
+export const getAdminSingleOrder = createAsyncThunk(
+    'order/getAdminSingleOrder',
+    async (id, { rejectWithValue }) => {
+        try {
+            const { data } = await axios.get(`/api/v1/admin/order/${id}`);
+            return data;
+        } catch (error) {
+            return rejectWithValue(error.response?.data?.message || 'Failed to fetch order');
+        }
+    }
+);
+
 // ================= SINGLE ORDER (user's own order) =================
 export const getSingleOrder = createAsyncThunk(
     'order/getSingleOrder',
@@ -116,6 +129,18 @@ const orderSlice = createSlice({
                 state.totalAmount = action.payload.totalAmount;
             })
             .addCase(getAllOrders.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+
+        // ADMIN SINGLE ORDER
+        builder
+            .addCase(getAdminSingleOrder.pending, (state) => { state.loading = true; state.error = null; })
+            .addCase(getAdminSingleOrder.fulfilled, (state, action) => {
+                state.loading = false;
+                state.order = action.payload.order;
+            })
+            .addCase(getAdminSingleOrder.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
             })

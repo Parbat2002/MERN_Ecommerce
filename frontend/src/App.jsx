@@ -75,6 +75,7 @@ function App() {
                 <Route path="/admin/users" element={<AdminRoute element={<AdminUsers />} />} />
                 <Route path="/admin/products" element={<AdminRoute element={<AdminProducts />} />} />
                 <Route path="/admin/reviews" element={<AdminRoute element={<AdminReviews />} />} />
+                <Route path="/admin/order/:id" element={<AdminRoute element={<OrderDetail isAdmin={true} />} />} />
             </Routes>
 
             {/* Floating user dashboard — shown when logged in */}

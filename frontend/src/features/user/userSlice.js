@@ -102,18 +102,15 @@ export const forgotPassword = createAsyncThunk(
 export const resetPassword = createAsyncThunk(
     'user/resetPassword',
     async ({ token, userData }, { rejectWithValue }) => {
-         console.log('Reset error:', error.response?.data)
         try {
             const config = { headers: { 'Content-Type': 'application/json' } };
-            const { data } = await axios.post(`/api/v1/password/reset/${token}`, userData, config)
+            const { data } = await axios.post(`/api/v1/password/reset/${token}`, userData, config);
             return data;
         } catch (error) {
-             console.log('Reset error:', error.response?.data)
             return rejectWithValue(error.response?.data?.message || 'Reset Password failed');
         }
     }
 );
-
 // ================= SLICE =================
 const userSlice = createSlice({
     name: 'user',

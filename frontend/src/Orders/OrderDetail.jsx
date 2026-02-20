@@ -6,19 +6,24 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import Loader from '../components/Loader'
 import PageTitle from '../components/PageTitle'
-import { getSingleOrder, removeErrors } from '../features/order/orderSlice'
+import { getAdminSingleOrder, getSingleOrder, removeErrors } from '../features/order/orderSlice'
 import '../orderStyles/OrderStyles.css'
 
-function OrderDetail() {
+
+function OrderDetail({ isAdmin = false }) {
+    
     const { id } = useParams()
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const { order, loading, error } = useSelector(state => state.order)
 
-    useEffect(() => {
-        dispatch(getSingleOrder(id))
-    }, [dispatch, id])
-
+     useEffect(() => {
+        if (isAdmin) {
+            dispatch(getAdminSingleOrder(id));
+        } else {
+            dispatch(getSingleOrder(id));
+        }
+    }, [dispatch, id, isAdmin])
     useEffect(() => {
         if (error) {
             toast.error(error, { position: 'top-center', autoClose: 3000 })
@@ -48,7 +53,7 @@ function OrderDetail() {
                             <div className="status-tracker">
                                 {steps.map((step, i) => (
                                     <div key={step} className={`tracker-step ${i <= currentStep ? 'done' : ''} ${i === currentStep ? 'active' : ''}`}>
-                                        <div className="tracker-circle">{i < currentStep ? '✓' : i + 1}</div>
+                                        <div className="tracker-circle">{i <= currentStep ? '✓' : i + 1}</div>
                                         <span className="tracker-label">{step}</span>
                                         {i < steps.length - 1 && <div className={`tracker-line ${i < currentStep ? 'done' : ''}`} />}
                                     </div>

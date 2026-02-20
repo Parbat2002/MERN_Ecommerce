@@ -105,7 +105,7 @@ function AdminOrders() {
                                 <td>{new Date(order.createdAt).toLocaleDateString()}</td>
                                 <td>
                                     <div className="action-btns">
-                                        <button className="view-btn" onClick={() => navigate(`/order/${order._id}`)}>
+                                        <button className="view-btn" onClick={() => navigate(`/admin/order/${order._id}`)}>
                                             <Visibility fontSize="small" />
                                         </button>
                                         <button className="edit-btn" onClick={() => { setEditModal(order); setNewStatus(order.orderStatus) }}>
